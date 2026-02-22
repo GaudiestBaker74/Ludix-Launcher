@@ -61,10 +61,10 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- ABOUT LUDIX LAUNCHER -->
+## About Ludix Launcher
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://raw.githubusercontent.com/GaudiestBaker74/Ludix-Launcher/main/images/screenshot.png?token=GHSAT0AAAAAADQYQTZMO4S5XKJQDOPVMQYS2M3NTDQ)
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
