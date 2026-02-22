@@ -11,8 +11,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="250" height="250">
+  <a href="https://github.com/othneildrew/Best-README-Template](https://github.com/GaudiestBaker74/Ludix-Launcher">
+    <img src="src/build/logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center"></h3>
