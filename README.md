@@ -23,11 +23,11 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/GaudiestBaker74/Ludix-Launcher">Download</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/GaudiestBaker74/Ludix-Launcher/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/GaudiestBaker74/Ludix-Launcher/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -225,18 +225,16 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/GaudiestBaker74/task-manager.svg?style=for-the-badge
-[contributors-url]: https://github.com/GaudiestBaker74/task-manager/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/GaudiestBaker74/task-manager.svg?style=for-the-badge
-[forks-url]: https://github.com/GaudiestBaker74/task-manager/network/members
-[stars-shield]: https://img.shields.io/github/stars/GaudiestBaker74/task-manager.svg?style=for-the-badge
-[stars-url]: https://github.com/GaudiestBaker74/task-manager/stargazers
-[issues-shield]: https://img.shields.io/github/issues/GaudiestBaker74/task-manager.svg?style=for-the-badge
-[issues-url]: https://github.com/GaudiestBaker74/task-manager/issues
-[license-shield]: https://img.shields.io/github/license/GaudiestBaker74/task-manager.svg?style=for-the-badge
-[license-url]: https://github.com/GaudiestBaker74/task-manager/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
+[contributors-shield]: https://img.shields.io/github/contributors/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
+[contributors-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
+[forks-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/network/members
+[stars-shield]: https://img.shields.io/github/stars/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
+[stars-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/stargazers
+[issues-shield]: https://img.shields.io/github/issues/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
+[issues-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/issues
+[license-shield]: https://img.shields.io/github/license/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
+[license-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [Javascript]: https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square
 [Javascript-url]: https://www.javascript.com/
