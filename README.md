@@ -109,22 +109,27 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+**FOR PERSONAL USAGE**
+
+1. Go to the [Releases](https://github.com/GaudiestBaker74/Ludix-Launcher/releases) Tab
+
+2. Install the Launcher
+
+3. That's It!  
+
+ **FOR CONTRIBUTION**
+
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/GaudiestBaker74/Ludix-Launcher.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   npm install electron electron-builder
    ```
 5. Change git remote url to avoid accidental pushes to base project
    ```sh
-   git remote set-url origin github_username/repo_name
+   git remote set-url origin GaudiestBaker74/Ludix-Launcher
    git remote -v # confirm the changes
    ```
 
@@ -146,15 +151,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
+- [ ] More Commands
+- [ ] Auto-Detect Epic Games
+- [ ] Better Performance
+- [ ] Auto Launch when the computer starts up
+- [ ] Create an option that shows you at the end of the week how many hours you played and what games you played.
 - [ ] Multi-language Support
-    - [ ] Chinese
     - [ ] Spanish
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/GaudiestBaker74/Ludix-Launcher/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -176,8 +181,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/GaudiestBaker74/task-manager/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=GaudiestBaker74/task-manager" alt="contrib.rocks image" />
+<a href="https://github.com/GaudiestBaker74/Ludix-Launcher/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=GaudiestBaker74/Ludix-Launcher" alt="contrib.rocks image" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -187,7 +192,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+Distributed under the Unlicense License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -196,9 +201,7 @@ Distributed under the Unlicense License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/your_username/repo_name](https://github.com/GaudiestBaker74/Ludix-Launcher)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
