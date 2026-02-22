@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ludix Launcher</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="dev-console">
+    <div class="console-header">
+      <div class="header-title">Ludix Terminal Core</div>
+      <div class="header-status">
+        <div class="status-dot"></div>
+        <span>KERNEL_READY</span>
+        <span style="margin-left:10px; opacity:0.5;">F9 TO EXIT</span>
+      </div>
+    </div>
+
+    <div id="console-output"></div>
+
+    <div class="console-input-area">
+      <span style="color:var(--accent, #0f0); font-weight:bold; margin-right:15px;">❯</span>
+      <input type="text" id="console-input" placeholder="Awaiting command..." autocomplete="off">
+    </div>
+  </div>
+
+  <div class="title-bar">
+    <div class="title">Ludix Launcher</div>
+    <div class="title-controls">
+      <button class="control-btn" id="minimizeBtn">-</button>
+      <button class="control-btn" id="maximizeBtn">□</button>
+      <button class="control-btn close-btn" id="closeBtn">×</button>
+    </div>
+  </div>
+
+  <div class="launcher">
+    <!-- Tab Bar -->
+    <div class="tabs">
+      <button class="tab-button active" data-platform="home">MAIN PANEL</button>
+      <button class="tab-button" data-platform="steam">STEAM</button>
+      <button class="tab-button" data-platform="epic">EPIC GAMES</button>
+      <div class="tab-underline"></div>
+    </div>
+
+    <div class="main-content">
+      <div id="home-view" class="platform-view active">
+        <div class="view-header">
+          <h2>Your most played games</h2>
+        </div>
+        <div id="top-games-list" class="games-grid">
+        </div>
+      </div>
+
+      <div id="steam-view" class="platform-view">
+        <div class="search-container">
+          <div class="search-icon">🔍</div>
+          <input type="text" id="searchInput" placeholder="Buscar en Steam..." />
+        </div>
+        <div id="games-list" class="games-grid">
+          <p>Loading Steam games...</p>
+        </div>
+      </div>
+
+      <div id="epic-view" class="platform-view">
+        <div class="epic-header">
+          <h2>Epic Games</h2>
+          <button id="addEpicGameBtn" class="add-game-btn">+ Add game</button>
+        </div>
+        <div id="epic-games-list" class="games-grid">
+          <p>You haven't added any Epic games yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Animated Background -->
+  <canvas id="bgCanvas"></canvas>
+
+  <script src="renderer.js"></script>
+  <script src="console.js"></script>
+  <script>
+    // Fondo animado (igual que antes)
+    (() => {
+      const canvas = document.getElementById('bgCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.offsetWidth;
+      let height = canvas.offsetHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      const particles = [];
+      const particleCount = 50;
+      const connectionDistance = 120;
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = (Math.random() - 0.5) * 0.5;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+        draw() {
+          ctx.fillStyle = '#4fc3f7';
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.strokeStyle = 'rgba(79, 195, 247, 0.15)';
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < connectionDistance) {
+              const opacity = 1 - dist / connectionDistance;
+              ctx.strokeStyle = `rgba(79, 195, 247, ${opacity * 0.3})`;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => {
+        width = canvas.offsetWidth;
+        height = canvas.offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+      });
+
+      draw();
+    })();
+  </script>
+  <!-- Modal para añadir juego -->
+  <div id="addGameModal" class="modal">
+    <div class="modal-content">
+      <h3>Add Epic Game</h3>
+
+      <!-- Nombre -->
+      <input type="text" id="gameNameInput" placeholder="Nombre del juego" />
+
+      <!-- Ruta del .exe -->
+      <div class="input-group">
+        <input type="text" id="gameExeInput" placeholder="Ruta del .exe" />
+        <button id="browseExeBtn" class="browse-btn">📁</button>
+      </div>
+
+      <!-- Imagen -->
+      <div class="image-upload">
+        <label>Game Image:</label>
+        <div class="image-preview" id="imagePreview">
+          <span>🖼️</span>
+        </div>
+        <input type="file" id="gameImageInput" accept="image/*" aria-label="Game Image" />
+        <button id="uploadImageBtn" class="upload-btn">📷 Upload Image</button>
+      </div>
+
+      <!-- Botones -->
+      <div class="modal-buttons">
+        <button id="cancelAddBtn">Cancel</button>
+        <button id="confirmAddBtn">Add</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  <footer class="status-bar">
+    <div class="status-bar">
+      <div class="status-left">
+        <div class="status-item">
+          <span class="status-dot" id="connection-dot"></span>
+          <span id="status-text">Ludix: Online</span>
+        </div>
+        <span class="footer-divider">|</span>
+        <div class="status-item">
+          <span id="ram-usage">RAM: -- MB</span>
+        </div>
+        <span class="footer-divider">|</span>
+        <div class="status-item" id="battery-status">
+          <span id="battery-icon">🔋</span>
+          <span id="battery-level">--%</span>
+        </div>
+      </div>
+
+      <div class="status-right">
+        <div class="status-item">
+          <span>Last Game: <strong id="last-game-name">None</strong></span>
+        </div>
+        <span class="footer-divider">|</span>
+        <div class="status-item">
+          <span id="footer-clock">00:00:00</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
