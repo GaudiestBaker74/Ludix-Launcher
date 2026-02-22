@@ -11,14 +11,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template](https://github.com/GaudiestBaker74/Ludix-Launcher">
+  <a href="https://github.com/GaudiestBaker74/Ludix-Launcher">
     <img src="src/build/logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center"></h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A Game Launcher for your games
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
