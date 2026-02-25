@@ -1,0 +1,40 @@
+name: Build & Release Electron (Stable + Beta)
+
+on:
+  workflow_dispatch:       # Permite ejecutar manualmente desde GitHub
+  push:
+    tags:
+      - 'v*'              # Solo corre cuando publiques un tag
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build & Publish Stable
+        run: npx electron-builder --win --mac --linux --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Publish Beta
+        run: npx electron-builder --win --mac --linux --publish always --prepackaged
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
