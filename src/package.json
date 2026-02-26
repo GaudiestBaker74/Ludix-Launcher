@@ -14,6 +14,21 @@
   "build": {
     "appId": "com.gaudiestbaker74.ludix_launcher",
     "productName": "Ludix Launcher",
+    "asar": true,
+        "publish": [
+      {
+        "provider": "github"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
     "files": [
       "**/*",
       "build/logo.png"
@@ -27,11 +42,7 @@
           "**/*"
         ]
       }
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "logo.png"
-    }
+    ]
   },
   "dependencies": {
     "winreg": "^1.2.5"
