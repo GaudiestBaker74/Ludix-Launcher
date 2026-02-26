@@ -1,9 +1,8 @@
-name: Build & Release Electron (Stable & Beta)
+name: Build & Release Electron (Stable + Beta)
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
 permissions:
   contents: write
