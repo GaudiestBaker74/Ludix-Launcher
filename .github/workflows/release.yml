@@ -1,6 +1,7 @@
 name: Build & Release Electron
 
 on:
+  workflow_dispatch: # Permite ejecutarlo manualmente con un botón
   release:
     types: [published]
 
@@ -12,7 +13,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Esto generará instaladores para los tres sistemas operativos en paralelo
         os: [windows-latest, macos-latest, ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
@@ -26,17 +26,15 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          # Buscamos el lockfile dentro de la carpeta build
           cache-dependency-path: ./src/build/package-lock.json
 
       - name: Install dependencies
-        # Entramos a la carpeta donde está tu package.json para instalar
         run: npm install
         working-directory: ./src/build
 
       - name: Build & Publish
-        # Ejecuta el script "build" de tu package.json y fuerza la subida a GitHub
-        run: npm run build -- --publish always
+        # Usamos --publish always para que intente subirlo a GitHub
+        run: npx electron-builder --publish always
         working-directory: ./src/build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
