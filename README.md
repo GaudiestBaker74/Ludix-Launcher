@@ -6,8 +6,6 @@
 [![Issues][issues-shield]][issues-url]
 [![Unlicense License][license-shield]][license-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -20,7 +18,7 @@
   <p align="center">
     A Game Launcher for your games
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/GaudiestBaker74/Ludix-Launcher/releases"><strong>Install It »</strong></a>
     <br />
     <br />
     <a href="https://github.com/GaudiestBaker74/Ludix-Launcher">Download</a>
@@ -30,8 +28,6 @@
     <a href="https://github.com/GaudiestBaker74/Ludix-Launcher/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -59,48 +55,42 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT LUDIX LAUNCHER -->
+
 ## About Ludix Launcher
 
-[![Product Name Screen Shot][product-screenshot]](https://raw.githubusercontent.com/GaudiestBaker74/Ludix-Launcher/main/images/screenshot.png?token=GHSAT0AAAAAADQYQTZMO4S5XKJQDOPVMQYS2M3NTDQ)
+[![Product Name Screen Shot][product-screenshot]](https://raw.githubusercontent.com/GaudiestBaker74/Ludix-Launcher/main/images/screenshot.png)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Ludix Launcher is a modern, lightweight game launcher designed to centralize your gaming library. It seamlessly integrates with Steam and Epic Games, providing a unified interface to launch your favorite titles while automatically tracking your play time.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+Features:
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+- **Library Centralization**: Automatically detects installed Steam games and allows manual adding of Epic Games.
+- **Play Time Tracking**: Keeps track of how many minutes you've spent in each game across all platforms.
+- **Tray Integration**: Runs quietly in the background, ensuring play time is recorded even when the main window is closed.
+- **Custom Notifications**: Alerts you when a gaming session ends with a summary of your play time.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+Ludix Launcher is built using modern web technologies and the Electron framework to ensure cross-platform compatibility and high performance.
 
-* [![Javascript][Javascript]][Javascript-url]
+- [![Javascript][Javascript]][Javascript-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy of Ludix Launcher up and running, follow these steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+You need to have Node.js and npm installed on your machine.
+
+- npm
   ```sh
   npm install npm@latest -g
   ```
@@ -115,9 +105,9 @@ _Below is an example of how you can instruct your audience on installing and set
 
 2. Install the Launcher
 
-3. That's It!  
+3. That's It!
 
- **FOR CONTRIBUTION**
+**FOR CONTRIBUTION**
 
 1. Clone the repo
    ```sh
@@ -127,7 +117,7 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install electron electron-builder
    ```
-5. Change git remote url to avoid accidental pushes to base project
+3. Change git remote url to avoid accidental pushes to base project
    ```sh
    git remote set-url origin GaudiestBaker74/Ludix-Launcher
    git remote -v # confirm the changes
@@ -135,20 +125,20 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Once installed, Ludix Launcher will automatically scan for your Steam games. To add Epic Games, use the "Add Game" feature (+) and select the executable. The launcher will automatically start tracking your play time as soon as you launch a game.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+- **Manage Games**: View all your installed games in one place.
+- **Tray Icon**: Right-click the tray icon to quickly restore the app or close it completely.
+- **Reset Stats**: You can reset all tracking times from the settings if you wish to start over.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 - [ ] More Commands
@@ -157,15 +147,14 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Auto Launch when the computer starts up
 - [ ] Create an option that shows you at the end of the week how many hours you played and what games you played.
 - [ ] Multi-language Support
-    - [ ] Spanish
+  - [ ] Spanish
 
 See the [open issues](https://github.com/GaudiestBaker74/Ludix-Launcher/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -187,47 +176,35 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the Unlicense License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/GaudiestBaker74/Ludix-Launcher)
+Project Link: [https://github.com/GaudiestBaker74/Ludix-Launcher](https://github.com/GaudiestBaker74/Ludix-Launcher)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-<!--
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+Special thanks to the open-source community and the following resources that helped in the development of Ludix Launcher:
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
--->
-
-
+- [Electron](https://www.electronjs.org/)
+- [Steam ACF Parser Logic](https://github.com/ValvePython/vdf)
+- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
 [contributors-url]: https://github.com/GaudiestBaker74/Ludix-Launcher/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/GaudiestBaker74/Ludix-Launcher.svg?style=for-the-badge
