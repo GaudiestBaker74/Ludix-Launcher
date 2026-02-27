@@ -25,16 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: ./src/package-lock.json
 
       - name: Install dependencies
+        # Intentamos instalar en la carpeta src, que es la raíz de tu código
         run: npm install
-        working-directory: ./src/build
+        working-directory: ./src
 
       - name: Build & Publish
-        # Usamos --publish always para que intente subirlo a GitHub
+        # Ejecutamos el build desde la carpeta src
         run: npx electron-builder --publish always
-        working-directory: ./src/build
+        working-directory: ./src
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
