@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     strategy:
-      fail-fast: false # Evita que si falla Windows, se cancelen los demás
+      fail-fast: false
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
 
@@ -20,13 +20,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # Linux necesita estas librerías para que electron-builder no falle
       - name: Install Linux dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -38,8 +39,9 @@ jobs:
         working-directory: ./src
 
       - name: Build & Publish
-        # Usamos npx para asegurar que use la versión local de electron-builder
-        run: npx electron-builder --publish always
+        run: |
+          npx shx rm -rf dist || true
+          npx electron-builder --publish always
         working-directory: ./src
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
