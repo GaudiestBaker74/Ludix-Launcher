@@ -4,6 +4,10 @@
   "description": "Ludix Launcher",
   "author": "Ludix",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaudiestbaker74/Ludix-Launcher.git"
+  },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder"
@@ -14,7 +18,9 @@
     "asar": true,
     "publish": [
       {
-        "provider": "github"
+        "provider": "github",
+        "owner": "GaudiestBaker74",
+        "repo": "Ludix-Launcher"
       }
     ],
     "directories": {
