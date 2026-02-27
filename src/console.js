@@ -203,7 +203,7 @@
                     case 'whoami':
                         const current = localStorage.getItem('ludix_user') || "Guest";
                         write(`USER: ${current.toUpperCase()}`, COLORS.primary);
-                        write(`SYSTEM: Ludix Kernel v3.1.0-stable`, COLORS.gray);
+                        write(`SYSTEM: Ludix Console v0.1.0-alpha`, COLORS.gray);
                         break;
 
                     case 'bg':
@@ -417,7 +417,7 @@
                         const versionInfo = {
                             os: "Ludix OS",
                             build: "2026.2.16",
-                            kernel: "Electron " + process.versions.electron,
+                            console: "Electron " + process.versions.electron,
                             chrome: "v" + process.versions.chrome,
                             node: "v" + process.versions.node,
                             status: "Stable Release"
@@ -426,7 +426,7 @@
                         write("--- SYSTEM INFORMATION ---", COLORS.primary);
                         write(`System: ${versionInfo.os}`, COLORS.info);
                         write(`Build: ${versionInfo.build}`, COLORS.gray);
-                        write(`Engine: ${versionInfo.kernel}`, COLORS.gray);
+                        write(`Engine: ${versionInfo.console}`, COLORS.gray);
                         write(`Environment: Node ${versionInfo.node}`, COLORS.gray);
                         write(`Status: ${versionInfo.status}`, COLORS.success);
                         break;
@@ -540,7 +540,7 @@
                         const infoColor = COLORS.primary;
                         write("      _             _ _ ", infoColor);
                         write("     | |           | (_)  OS: Ludix OS v3.1", infoColor);
-                        write("     | |    _   _ _| |_   Kernel: Electron 2026", infoColor);
+                        write("     | |    _   _ _| |_   console: Electron 2026", infoColor);
                         write("     | |   | | | / _` | |  Shell: Ludix-Bash", infoColor);
                         write("     | |___| |_| | (_| | |  Uptime: " + Math.floor(performance.now() / 60000) + "m", infoColor);
                         write("     \\_____/\\__,_|\\__,_|_|  Host: " + (localStorage.getItem('ludix_user') || 'Agente'), infoColor);

@@ -85,7 +85,6 @@
   <script src="renderer.js"></script>
   <script src="console.js"></script>
   <script>
-    // Fondo animado (igual que antes)
     (() => {
       const canvas = document.getElementById('bgCanvas');
       if (!canvas) return;
@@ -165,16 +164,16 @@
     <div class="modal-content">
       <h3>Add Epic Game</h3>
 
-      <!-- Nombre -->
-      <input type="text" id="gameNameInput" placeholder="Nombre del juego" />
+      <!-- Name -->
+      <input type="text" id="gameNameInput" placeholder="Game Name" />
 
-      <!-- Ruta del .exe -->
+      <!-- .exe path -->
       <div class="input-group">
-        <input type="text" id="gameExeInput" placeholder="Ruta del .exe" />
+        <input type="text" id="gameExeInput" placeholder="Game.exe" />
         <button id="browseExeBtn" class="browse-btn">📁</button>
       </div>
 
-      <!-- Imagen -->
+      <!-- Image -->
       <div class="image-upload">
         <label>Game Image:</label>
         <div class="image-preview" id="imagePreview">
@@ -184,7 +183,7 @@
         <button id="uploadImageBtn" class="upload-btn">📷 Upload Image</button>
       </div>
 
-      <!-- Botones -->
+      <!-- Buttons -->
       <div class="modal-buttons">
         <button id="cancelAddBtn">Cancel</button>
         <button id="confirmAddBtn">Add</button>
