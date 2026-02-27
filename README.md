@@ -61,6 +61,8 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://raw.githubusercontent.com/GaudiestBaker74/Ludix-Launcher/main/images/screenshot.png)
 
+> Background is custom, you can change it on the console.
+
 Ludix Launcher is a modern, lightweight game launcher designed to centralize your gaming library. It seamlessly integrates with Steam and Epic Games, providing a unified interface to launch your favorite titles while automatically tracking your play time.
 
 Features:
