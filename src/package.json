@@ -2,14 +2,11 @@
   "name": "ludix_launcher",
   "version": "1.0.0",
   "description": "Ludix Launcher",
+  "author": "Ludix",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder"
-  },
-  "devDependencies": {
-    "electron": "^30.5.1",
-    "electron-builder": "^26.0.12"
   },
   "build": {
     "appId": "com.gaudiestbaker74.ludix_launcher",
@@ -17,11 +14,12 @@
     "asar": true,
     "publish": [
       {
-        "provider": "github",
-        "owner": "GaudiestBaker74",
-        "repo": "Ludix-Launcher"
+        "provider": "github"
       }
     ],
+    "directories": {
+      "output": "dist"
+    },
     "win": {
       "target": "nsis"
     },
@@ -33,20 +31,16 @@
     },
     "files": [
       "**/*",
-      "build/logo.png"
-    ],
-    "extraResources": [
-      "build/logo.png",
-      {
-        "from": "build/",
-        "to": "build/",
-        "filter": [
-          "**/*"
-        ]
-      }
+      "!dist",
+      "!.github",
+      "!package-lock.json"
     ]
   },
   "dependencies": {
     "winreg": "^1.2.5"
+  },
+  "devDependencies": {
+    "electron": "^30.5.1",
+    "electron-builder": "^26.0.12"
   }
 }
