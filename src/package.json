@@ -1,6 +1,6 @@
 {
   "name": "ludix_launcher",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Ludix Launcher",
   "author": "Ludix",
   "main": "main.js",
@@ -49,4 +49,5 @@
     "electron": "^30.5.1",
     "electron-builder": "^26.0.12"
   }
+
 }
