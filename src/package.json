@@ -15,9 +15,11 @@
     "appId": "com.gaudiestbaker74.ludix_launcher",
     "productName": "Ludix Launcher",
     "asar": true,
-        "publish": [
+    "publish": [
       {
-        "provider": "github"
+        "provider": "github",
+        "owner": "GaudiestBaker74",
+        "repo": "Ludix-Launcher"
       }
     ],
     "win": {
