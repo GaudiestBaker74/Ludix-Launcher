@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     strategy:
-      fail-fast: false
+      fail-fast: false # Evita que si falla Windows, se cancelen los demás
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
 
@@ -26,13 +26,19 @@ jobs:
         with:
           node-version: 18
 
+      # Linux necesita estas librerías para que electron-builder no falle
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libarchive-tools
+
       - name: Install dependencies
-        # Intentamos instalar en la carpeta src, que es la raíz de tu código
         run: npm install
         working-directory: ./src
 
       - name: Build & Publish
-        # Ejecutamos el build desde la carpeta src
+        # Usamos npx para asegurar que use la versión local de electron-builder
         run: npx electron-builder --publish always
         working-directory: ./src
         env:
