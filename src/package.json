@@ -1,6 +1,6 @@
 {
   "name": "ludix_launcher",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Ludix Launcher",
   "author": "Ludix",
   "main": "main.js",
@@ -27,13 +27,16 @@
       "output": "dist"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "build/logo.png"
     },
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "icon": "build/logo.png"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "icon": "build/logo.png"
     },
     "files": [
       "**/*",
@@ -49,5 +52,4 @@
     "electron": "^30.5.1",
     "electron-builder": "^26.0.12"
   }
-
 }
