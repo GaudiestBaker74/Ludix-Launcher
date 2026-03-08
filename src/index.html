@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ludix Launcher</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="i18n.js"></script>
 </head>
-
 <body>
+  <!-- Animated Background Video -->
+  <video id="video-bg" autoplay loop muted playsinline style="display:none; position:fixed; right:0; bottom:0; min-width:100%; min-height:100%; width:auto; height:auto; z-index:-2; object-fit:cover;"></video>
 
+  <!-- Developer Console (F9) -->
   <div id="dev-console">
     <div class="console-header">
       <div class="header-title">Ludix Terminal Core</div>
       <div class="header-status">
         <div class="status-dot"></div>
-        <span>KERNEL_READY</span>
-        <span style="margin-left:10px; opacity:0.5;">F9 TO EXIT</span>
+        <span>CONSOLE_READY</span>
+        <span style="margin-left:10px;opacity:0.5;">F9 TO EXIT</span>
       </div>
     </div>
-
     <div id="console-output"></div>
-
     <div class="console-input-area">
-      <span style="color:var(--accent, #0f0); font-weight:bold; margin-right:15px;">❯</span>
+      <span style="color:var(--accent,#0f0);font-weight:bold;margin-right:15px;">❯</span>
       <input type="text" id="console-input" placeholder="Awaiting command..." autocomplete="off">
     </div>
   </div>
 
+  <!-- Title Bar -->
   <div class="title-bar">
-    <div class="title">Ludix Launcher</div>
+    <div class="title" data-i18n="appTitle">Ludix Launcher</div>
     <div class="title-controls">
+      <button class="lang-btn active" data-lang="en" title="English">🇬🇧</button>
+      <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
+      <div class="title-divider"></div>
       <button class="control-btn" id="minimizeBtn">-</button>
       <button class="control-btn" id="maximizeBtn">□</button>
       <button class="control-btn close-btn" id="closeBtn">×</button>
@@ -39,187 +43,338 @@
   </div>
 
   <div class="launcher">
-    <!-- Tab Bar -->
-    <div class="tabs">
-      <button class="tab-button active" data-platform="home">MAIN PANEL</button>
-      <button class="tab-button" data-platform="steam">STEAM</button>
-      <button class="tab-button" data-platform="epic">EPIC GAMES</button>
+    <!-- Tab Bar (6 tabs) -->
+    <div class="tabs tabs-6">
+      <button class="tab-button active" data-platform="home"  data-i18n="tabHome" tabindex="0">MAIN PANEL</button>
+      <button class="tab-button"        data-platform="steam" data-i18n="tabSteam" tabindex="0">STEAM</button>
+      <button class="tab-button"        data-platform="epic"  data-i18n="tabEpic" tabindex="0">EPIC GAMES</button>
+      <button class="tab-button"        data-platform="other" data-i18n="tabOther" tabindex="0">OTHER</button>
+      <button class="tab-button"        data-platform="retro" tabindex="0">RETRO</button>
+      <button class="tab-button"        data-platform="profile" tabindex="0">PROFILE</button>
       <div class="tab-underline"></div>
     </div>
 
     <div class="main-content">
+
+      <!-- ── MAIN PANEL (HOME) ── -->
       <div id="home-view" class="platform-view active">
-        <div class="view-header">
-          <h2>Your most played games</h2>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;">
+          <div>
+            <h2 id="welcomeText" style="margin-bottom:10px;">Good afternoon, <span style="color:var(--accent);">Player!</span></h2>
+            <p id="totalTimeIntro" style="color:#aaa;font-size:14px; margin-bottom:20px;">You have spent ... hours enjoying your games on Ludix.</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button id="weeklyReportBtn" class="add-game-btn"><span class="icon">📊</span> Weekly Report</button>
+
+            <button id="settingsBtn" class="add-game-btn" tabindex="0"><span class="icon">⚙️</span> Settings</button>
+          </div>
         </div>
-        <div id="top-games-list" class="games-grid">
+
+        <!-- Layout for Top Games and News Feed -->
+        <div style="display:flex; gap:20px; flex-wrap:wrap;">
+          <div style="flex:2; min-width:300px;">
+            <div id="top-games-list">
+              <!-- JS fills the 3 most played games here -->
+            </div>
+          </div>
+          
+          <!-- News Feed Sidebar -->
+          <div style="flex:1; min-width:250px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:20px; display:flex; flex-direction:column; max-height:450px;">
+            <h3 style="color:var(--accent); font-size:1.1rem; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">IGN Ground Zero</h3>
+            <div id="gaming-news-list" style="overflow-y:auto; padding-right:5px; display:flex; flex-direction:column; gap:15px; font-size:0.9rem;">
+              <p style="color:#777; text-align:center;">Establishing uplink...</p>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- ── STEAM VIEW ── -->
       <div id="steam-view" class="platform-view">
         <div class="search-container">
           <div class="search-icon">🔍</div>
-          <input type="text" id="searchInput" placeholder="Search on Steam..." />
+          <input type="text" id="searchInput" data-i18n="searchSteam" data-i18n-attr="placeholder" placeholder="Search on Steam..." />
         </div>
         <div id="games-list" class="games-grid">
-          <p>Loading Steam games...</p>
+          <p data-i18n="loadingSteam">Loading Steam games...</p>
         </div>
       </div>
 
+      <!-- ── EPIC VIEW (auto-detect only) ── -->
       <div id="epic-view" class="platform-view">
         <div class="epic-header">
-          <h2>Epic Games</h2>
-          <button id="addEpicGameBtn" class="add-game-btn">+ Add game</button>
+          <h2 data-i18n="epicTitle">Epic Games</h2>
+          <div class="epic-header-btns">
+            <button id="autoDetectEpicBtn" class="action-btn" data-i18n="autoDetect">🔍 Auto-Detect</button>
+          </div>
         </div>
         <div id="epic-games-list" class="games-grid">
-          <p>You haven't added any Epic games yet.</p>
+          <p style="text-align:center;color:#777;" data-i18n="noEpicGames">No Epic games detected yet.</p>
         </div>
       </div>
+
+      <!-- ── OTHER GAMES VIEW (manual) ── -->
+      <div id="other-view" class="platform-view">
+        <div class="epic-header">
+          <h2 data-i18n="otherGamesTitle">Other Games</h2>
+          <div class="epic-header-btns">
+            <button id="findExeBtn"      class="action-btn" data-i18n="findExe">🔍 Find EXEs</button>
+            <button id="addOtherGameBtn" class="add-game-btn" data-i18n="addOtherGame">+ Add Game</button>
+          </div>
+        </div>
+        <!-- EXE Finder panel (hidden by default) -->
+        <div id="exeFinderPanel" class="exe-finder-panel" style="display:none;">
+          <div class="exe-finder-header">
+            <span data-i18n="exeSuggestionsTitle">🔍 EXE/App Finder</span>
+            <button id="closeExeFinder" class="close-panel-btn">✕</button>
+          </div>
+          <p class="exe-finder-hint" data-i18n="exeSuggestionsHint">Select an executable from common game directories:</p>
+          <input type="text" id="exeSearchFilter" placeholder="Filter..." class="exe-filter-input" />
+          <div id="exeSuggestionsList" class="exe-suggestions-list">
+            <p style="color:#555;text-align:center">Scanning...</p>
+          </div>
+        </div>
+        <div id="other-games-list" class="games-grid">
+          <p style="text-align:center;color:#777;" data-i18n="noOtherGames">No games added yet.</p>
+        </div>
+      </div>
+
+      <!-- ── RETRO VIEW ── -->
+      <div id="retro-view" class="platform-view">
+        <div class="view-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <h2>Retro Emulators</h2>
+          <button id="addRetroGameBtn" class="add-game-btn" tabindex="0"><span class="icon">➕</span> Add Rom</button>
+        </div>
+        <div id="retro-games-list" class="games-grid">
+          <p style="text-align:center;color:#777;">No ROMs added yet.</p>
+        </div>
+      </div>
+
+      <!-- ── PROFILE / STATS VIEW ── -->
+      <div id="profile-view" class="platform-view">
+        <div class="view-header">
+          <h2>Player Profile</h2>
+        </div>
+        <div class="profile-container" style="display:flex;gap:30px;padding:20px;flex-wrap:wrap;">
+          <div class="profile-card" style="flex:1;min-width:250px;background:rgba(255,255,255,0.05);padding:30px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);text-align:center;">
+            <h3 style="color:var(--accent);margin-bottom:15px;font-size:1.4rem;">Lifetime Stats</h3>
+            <div style="font-size:3.5rem;font-weight:800;margin-bottom:5px;text-shadow:0 0 10px rgba(79,195,247,0.5);" id="profile-total-hours">0h</div>
+            <div style="color:#aaa;font-size:1rem;text-transform:uppercase;letter-spacing:1px;">Total Playtime</div>
+            <div style="margin-top:30px;font-size:2.5rem;font-weight:800;" id="profile-total-games">0</div>
+            <div style="color:#aaa;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">Games Tracked</div>
+          </div>
+          <div class="profile-card" style="flex:2;min-width:300px;background:rgba(255,255,255,0.05);padding:30px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);">
+            <h3 style="color:var(--accent);margin-bottom:20px;font-size:1.4rem;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px;">Most Played Top 10</h3>
+            <div id="profile-most-played-list" style="display:flex;flex-direction:column;gap:15px;max-height:400px;overflow-y:auto;padding-right:10px;">
+              <!-- Filled via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- ── SETTINGS MODAL ── -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content" style="max-width:500px;">
+      <h3 data-i18n="settingsTitle" style="margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Preferences & Settings</h3>
+      
+      <div style="margin-bottom:15px;">
+        <label style="display:block; margin-bottom:8px; color:#aaa;">Accent Color</label>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <input type="color" id="themeAccent" value="#4fc3f7" style="border:none; padding:0; width:50px; height:30px; cursor:pointer; background:transparent;">
+          <button id="resetThemeBtn" class="action-btn" style="padding:4px 10px; font-size:12px;">Reset</button>
+        </div>
+      </div>
+      
+      <div style="margin-bottom:15px;">
+        <label style="display:block; margin-bottom:8px; color:#aaa;">Background Blur Intensity</label>
+        <input type="range" id="themeBlur" min="0" max="20" value="10" style="width:100%;">
+      </div>
+
+      <div class="setting-row" style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="setting-info">
+          <label style="display:block; color:#aaa;">Performance Mode</label>
+          <span style="font-size:0.8rem; color:#666;">Disable Canvas Animations</span>
+        </div>
+        <input type="checkbox" id="themePerf" style="width:auto; margin:0;">
+      </div>
+
+      <div class="setting-row" style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="setting-info">
+          <label style="display:block; color:#aaa;">Launch on startup</label>
+          <span style="font-size:0.8rem; color:#666;">Start minimized with Windows</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="startupToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="modal-buttons" style="margin-top:25px;">
+        <button id="closeSettingsBtn" class="action-btn" style="background:var(--accent); color:#000; width:100%;">Done</button>
+      </div>
+    </div>
   </div>
 
   <!-- Animated Background -->
   <canvas id="bgCanvas"></canvas>
 
-  <script src="renderer.js"></script>
-  <script src="console.js"></script>
+  <!-- ═══════════════════════
+       MODALS
+  ═══════════════════════ -->
+
+  <!-- Add / Edit Game Modal (used for both Epic and Other) -->
+  <div id="addGameModal" class="modal">
+    <div class="modal-content">
+      <h3 id="modalTitle" data-i18n="addGameTitle">Add Game</h3>
+      <input type="text" id="gameNameInput" data-i18n="gameName" data-i18n-attr="placeholder" placeholder="Game Name" />
+      <div class="input-group">
+        <input type="text" id="gameExeInput" data-i18n="gameExe" data-i18n-attr="placeholder" placeholder="Game.exe" />
+        <button id="browseExeBtn" class="browse-btn">📁</button>
+      </div>
+      <div class="image-upload">
+        <label data-i18n="gameImage">Game Image:</label>
+        <div class="image-preview" id="imagePreview"><span>🖼️</span></div>
+        <input type="file" id="gameImageInput" accept="image/*" aria-label="Game Image" />
+        <button id="uploadImageBtn" class="upload-btn" data-i18n="uploadImage">📷 Upload Image</button>
+      </div>
+      <div class="modal-buttons">
+        <button id="cancelAddBtn" data-i18n="cancelBtn">Cancel</button>
+        <button id="confirmAddBtn" data-i18n="addBtn">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ADD RETRO GAME MODAL ── -->
+  <div id="addRetroModal" class="modal">
+    <div class="modal-content">
+      <h3 style="margin-bottom:20px; color:var(--accent);">Add Retro / Rom</h3>
+      <input type="text" id="retroNameInput" placeholder="Game Name (e.g. Super Mario 64)" tabindex="0" />
+      
+      <div class="input-group">
+        <input type="text" id="retroEmuInput" placeholder="Emulator .exe path" readonly tabindex="-1" />
+        <button id="browseRetroEmuBtn" class="browse-btn" tabindex="0">Browse</button>
+      </div>
+
+      <div class="input-group" style="margin-bottom:20px;">
+        <input type="text" id="retroRomInput" placeholder="ROM file path (.nes, .gcs, .iso)" readonly tabindex="-1" />
+        <button id="browseRetroRomBtn" class="browse-btn" tabindex="0">Browse</button>
+      </div>
+
+      <div class="image-upload" style="text-align:center;">
+        <label>Cover Art (Optional)</label>
+        <div id="retroImagePreview" class="image-preview" tabindex="0">
+          <span>📸</span>
+        </div>
+      </div>
+
+      <div class="modal-buttons" style="margin-top:20px;">
+        <button id="cancelRetroAddBtn" class="action-btn" style="background:#555; color:#fff;" tabindex="0">Cancel</button>
+        <button id="confirmRetroAddBtn" class="action-btn" style="background:var(--accent); color:#000; font-weight:bold;" tabindex="0">Add ROM</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-Detect Epic Modal -->
+  <div id="autoDetectModal" class="modal">
+    <div class="modal-content modal-wide">
+      <h3 data-i18n="autoDetectTitle">🔍 Detected Epic Games</h3>
+      <p id="autoDetectSubtitle"></p>
+      <div id="autoDetectList" class="detect-list"></div>
+      <div class="modal-buttons">
+        <button id="cancelDetectBtn" data-i18n="autoDetectCancel">Cancel</button>
+        <button id="confirmDetectBtn" class="btn-primary" data-i18n="autoDetectAdd">Add Selected</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Report Modal -->
+  <div id="weeklyReportModal" class="modal">
+    <div class="modal-content modal-wide">
+      <h3 data-i18n="weeklyTitle">📊 Weekly Report</h3>
+      <p class="modal-subtitle" data-i18n="weeklySubtitle">Last 7 days of playtime</p>
+      <div id="weeklyDayBars" class="week-bars"></div>
+      <div id="weeklyGameList" class="weekly-game-list"></div>
+      <div class="weekly-total">
+        <span data-i18n="weeklyTotal">Total this week:</span>
+        <strong id="weeklyTotalTime">0h 0m</strong>
+      </div>
+      <div class="modal-buttons">
+        <button id="closeWeeklyBtn" class="btn-primary" data-i18n="weeklyClose">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ═══════════════════════
+       STATUS BAR
+  ═══════════════════════ -->
+  <footer class="status-bar">
+    <div class="status-left">
+      <div class="status-item">
+        <span class="status-dot" id="connection-dot"></span>
+        <span id="status-text" data-i18n="statusOnline">Ludix: Online</span>
+      </div>
+      <span class="footer-divider">|</span>
+      <div class="status-item"><span id="ram-usage">RAM: -- MB</span></div>
+      <span class="footer-divider">|</span>
+      <div class="status-item" id="battery-status">
+        <span id="battery-icon">🔋</span>
+        <span id="battery-level">--%</span>
+      </div>
+    </div>
+    <div class="status-right">
+      <div class="status-item">
+        <span data-i18n="lastGame">Last Game:</span>
+        <strong id="last-game-name">None</strong>
+      </div>
+      <span class="footer-divider">|</span>
+      <div class="status-item"><span id="footer-clock">00:00:00</span></div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════
+       SCRIPTS
+  ═══════════════════════ -->
   <script>
     (() => {
       const canvas = document.getElementById('bgCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      let width = canvas.offsetWidth;
-      let height = canvas.offsetHeight;
-      canvas.width = width;
-      canvas.height = height;
-
-      const particles = [];
-      const particleCount = 50;
-      const connectionDistance = 120;
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.vx = (Math.random() - 0.5) * 0.5;
-          this.vy = (Math.random() - 0.5) * 0.5;
-        }
-        update() {
-          this.x += this.vx;
-          this.y += this.vy;
-          if (this.x < 0 || this.x > width) this.vx *= -1;
-          if (this.y < 0 || this.y > height) this.vy *= -1;
-        }
-        draw() {
+      let w = canvas.width  = canvas.offsetWidth;
+      let h = canvas.height = canvas.offsetHeight;
+      const pts = Array.from({length: 25}, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4
+      }));
+      function frame() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
           ctx.fillStyle = '#4fc3f7';
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-        ctx.strokeStyle = 'rgba(79, 195, 247, 0.15)';
-        ctx.lineWidth = 1;
-
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
-
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < connectionDistance) {
-              const opacity = 1 - dist / connectionDistance;
-              ctx.strokeStyle = `rgba(79, 195, 247, ${opacity * 0.3})`;
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
+          ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
+          for (let j = i + 1; j < pts.length; j++) {
+            const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = Math.sqrt(dx*dx + dy*dy);
+            if (d < 110) {
+              ctx.strokeStyle = `rgba(79,195,247,${(1-d/110)*.3})`;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
             }
           }
         }
-        requestAnimationFrame(draw);
+        requestAnimationFrame(frame);
       }
-
-      window.addEventListener('resize', () => {
-        width = canvas.offsetWidth;
-        height = canvas.offsetHeight;
-        canvas.width = width;
-        canvas.height = height;
-      });
-
-      draw();
+      window.addEventListener('resize', () => { w = canvas.width = canvas.offsetWidth; h = canvas.height = canvas.offsetHeight; });
+      frame();
     })();
   </script>
-  <!-- Add Game -->
-  <div id="addGameModal" class="modal">
-    <div class="modal-content">
-      <h3>Add Epic Game</h3>
-
-      <!-- Name -->
-      <input type="text" id="gameNameInput" placeholder="Game Name" />
-
-      <!-- .exe path -->
-      <div class="input-group">
-        <input type="text" id="gameExeInput" placeholder="Game.exe" />
-        <button id="browseExeBtn" class="browse-btn">📁</button>
-      </div>
-
-      <!-- Image -->
-      <div class="image-upload">
-        <label>Game Image:</label>
-        <div class="image-preview" id="imagePreview">
-          <span>🖼️</span>
-        </div>
-        <input type="file" id="gameImageInput" accept="image/*" aria-label="Game Image" />
-        <button id="uploadImageBtn" class="upload-btn">📷 Upload Image</button>
-      </div>
-
-      <!-- Buttons -->
-      <div class="modal-buttons">
-        <button id="cancelAddBtn">Cancel</button>
-        <button id="confirmAddBtn">Add</button>
-      </div>
-    </div>
-  </div>
-  </div>
-  <footer class="status-bar">
-    <div class="status-bar">
-      <div class="status-left">
-        <div class="status-item">
-          <span class="status-dot" id="connection-dot"></span>
-          <span id="status-text">Ludix: Online</span>
-        </div>
-        <span class="footer-divider">|</span>
-        <div class="status-item">
-          <span id="ram-usage">RAM: -- MB</span>
-        </div>
-        <span class="footer-divider">|</span>
-        <div class="status-item" id="battery-status">
-          <span id="battery-icon">🔋</span>
-          <span id="battery-level">--%</span>
-        </div>
-      </div>
-
-      <div class="status-right">
-        <div class="status-item">
-          <span>Last Game: <strong id="last-game-name">None</strong></span>
-        </div>
-        <span class="footer-divider">|</span>
-        <div class="status-item">
-          <span id="footer-clock">00:00:00</span>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <script src="sounds.js"></script>
+  <script src="gamepad.js"></script>
+  <script src="renderer.js"></script>
+  <script src="console.js"></script>
 </body>
-
 </html>

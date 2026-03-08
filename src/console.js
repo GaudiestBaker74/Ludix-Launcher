@@ -17,9 +17,22 @@
 
     function loadSavedConfig() {
         const savedBg = localStorage.getItem('ludix_bg');
+        const videoBg = document.getElementById('video-bg');
         if (savedBg && savedBg !== 'null') {
-            document.body.style.backgroundImage = `url('${savedBg}')`;
-            document.body.style.backgroundSize = "cover";
+            if (savedBg.endsWith('.mp4') || savedBg.endsWith('.webm')) {
+                document.body.style.backgroundImage = "none";
+                if (videoBg) {
+                    videoBg.src = savedBg;
+                    videoBg.style.display = "block";
+                }
+            } else {
+                if (videoBg) { videoBg.style.display = "none"; videoBg.removeAttribute("src"); }
+                document.body.style.backgroundImage = `url('${savedBg}')`;
+                document.body.style.backgroundSize = "cover";
+            }
+        } else {
+            document.body.style.backgroundImage = "none";
+            if (videoBg) { videoBg.style.display = "none"; videoBg.removeAttribute("src"); }
         }
 
         const savedLastGame = localStorage.getItem('ludix_last_game') || "None";
@@ -89,8 +102,8 @@
 
                 switch (command) {
                     case 'help':
-                        write("--- TERMINAL LUDIX OS V2.0 ---", COLORS.primary);
-                        write("play [name]      - Launches detected game");
+                        write("--- TERMINAL LUDIX OS V2.1 ---", COLORS.primary);
+                        write("play [name]        - Launches detected game");
                         write("search-store [q]   - Searches Epic Games Store");
                         write("bg [url]           - Changes background (GIF/JPG)");
                         write("theme [color]      - Changes accent color (#f00)");
@@ -100,6 +113,11 @@
                         write("ram / uptime       - System sensors");
                         write("ls-games           - Lists all games in console");
                         write("cls / reload       - Clear / Restart");
+                        write("--- NEW COMMANDS ---", COLORS.success);
+                        write("lang [en|es]       - Switch UI language");
+                        write("startup [on|off]   - Toggle launch on Windows startup");
+                        write("weekly             - Open weekly play report");
+                        write("epic-scan          - Auto-detect Epic Games installs");
                         break;
 
                     case 'search-store':
@@ -166,8 +184,14 @@
                     case 'theme':
                         const color = args[0];
                         if (!color) return write("Use: theme [#hex]", COLORS.error);
-                        document.documentElement.style.setProperty('--accent', color);
-                        localStorage.setItem('ludix_theme', color);
+
+                        const currentTheme = JSON.parse(localStorage.getItem('ludix_theme') || '{"accent":"#4fc3f7", "blur":"10", "perf":false}');
+                        currentTheme.accent = color;
+                        localStorage.setItem('ludix_theme', JSON.stringify(currentTheme));
+
+                        if (typeof loadTheme === 'function') loadTheme();
+                        else document.documentElement.style.setProperty('--accent', color);
+
                         write(`Color scheme updated to ${color}`, color);
                         break;
 
@@ -195,9 +219,10 @@
                     case 'ram':
                         const mb = await window.electronAPI.getRamUsage();
                         const barSize = 20;
-                        const used = Math.min(Math.floor(mb / 100), barSize);
+                        const pctUsed = parseFloat(mb.usedGB) / parseFloat(mb.totalGB);
+                        const used = Math.min(Math.floor(pctUsed * barSize), barSize);
                         const bar = "█".repeat(used) + "░".repeat(barSize - used);
-                        write(`RAM USAGE: [${bar}] ${mb}MB`, COLORS.info);
+                        write(`RAM USAGE: [${bar}] ${mb.usedGB} GB / ${mb.totalGB} GB`, COLORS.info);
                         break;
 
                     case 'whoami':
@@ -208,14 +233,25 @@
 
                     case 'bg':
                         const url = args[0];
+                        const videoBg = document.getElementById('video-bg');
                         if (url === 'null' || !url) {
                             localStorage.removeItem('ludix_bg');
                             document.body.style.backgroundImage = "none";
+                            if (videoBg) { videoBg.style.display = "none"; videoBg.removeAttribute("src"); }
                             write("Background reset.");
                         } else {
                             localStorage.setItem('ludix_bg', url);
-                            document.body.style.backgroundImage = `url('${url}')`;
-                            document.body.style.backgroundSize = "cover";
+                            if (url.endsWith('.mp4') || url.endsWith('.webm')) {
+                                document.body.style.backgroundImage = "none";
+                                if (videoBg) {
+                                    videoBg.src = url;
+                                    videoBg.style.display = "block";
+                                }
+                            } else {
+                                if (videoBg) { videoBg.style.display = "none"; videoBg.removeAttribute("src"); }
+                                document.body.style.backgroundImage = `url('${url}')`;
+                                document.body.style.backgroundSize = "cover";
+                            }
                             write("Background updated.", COLORS.success);
                         }
                         break;
@@ -544,6 +580,77 @@
                         write("     | |   | | | / _` | |  Shell: Ludix-Bash", infoColor);
                         write("     | |___| |_| | (_| | |  Uptime: " + Math.floor(performance.now() / 60000) + "m", infoColor);
                         write("     \\_____/\\__,_|\\__,_|_|  Host: " + (localStorage.getItem('ludix_user') || 'Agente'), infoColor);
+                        break;
+                    }
+
+                    case 'lang': {
+                        const newLang = args[0]?.toLowerCase();
+                        if (newLang !== 'en' && newLang !== 'es') {
+                            return write("Usage: lang [en|es]", COLORS.error);
+                        }
+                        if (typeof setLanguage === 'function') {
+                            setLanguage(newLang);
+                            write(newLang === 'es' ? '✅ Idioma cambiado a Español.' : '✅ Language changed to English.', COLORS.success);
+                        } else {
+                            write('i18n module not loaded.', COLORS.error);
+                        }
+                        break;
+                    }
+
+                    case 'startup': {
+                        const mode = args[0]?.toLowerCase();
+                        if (mode !== 'on' && mode !== 'off') {
+                            return write('Usage: startup [on|off]', COLORS.error);
+                        }
+                        const enabled = mode === 'on';
+                        await window.electronAPI.setAutoLaunch(enabled);
+                        write(
+                            enabled
+                                ? '🚀 Auto-launch ENABLED. Ludix will start with Windows.'
+                                : '🛑 Auto-launch DISABLED.',
+                            enabled ? COLORS.success : COLORS.warn
+                        );
+                        // Sync the toggle if settings modal is open
+                        const toggle = document.getElementById('startupToggle');
+                        if (toggle) toggle.checked = enabled;
+                        break;
+                    }
+
+                    case 'weekly': {
+                        // Show weekly report modal
+                        const reportModal = document.getElementById('weeklyReportModal');
+                        if (!reportModal) {
+                            return write('Weekly report modal not found.', COLORS.error);
+                        }
+                        write('📊 Opening weekly report...', COLORS.info);
+                        devConsole.classList.remove('visible');
+                        reportModal.style.display = 'flex';
+                        if (typeof window.__openWeeklyReport === 'function') {
+                            window.__openWeeklyReport();
+                        } else {
+                            // Trigger the button click as a fallback
+                            document.getElementById('weeklyReportBtn')?.click();
+                        }
+                        break;
+                    }
+
+                    case 'epic-scan': {
+                        write('🔍 Scanning for Epic Games installations...', COLORS.info);
+                        const result = await window.electronAPI.autoDetectEpicGames();
+                        if (!result.success) {
+                            write('Epic Games launcher not found or not installed.', COLORS.warn);
+                            break;
+                        }
+                        const found = result.games || [];
+                        if (found.length === 0) {
+                            write('✅ No new Epic games detected (all already added).', COLORS.success);
+                        } else {
+                            write(`🎮 Found ${found.length} new game(s):`, COLORS.success);
+                            found.forEach(g => write(` • ${g.name}`, '#ccc'));
+                            write('Opening auto-detect panel...', COLORS.info);
+                            devConsole.classList.remove('visible');
+                            document.getElementById('autoDetectEpicBtn')?.click();
+                        }
                         break;
                     }
 

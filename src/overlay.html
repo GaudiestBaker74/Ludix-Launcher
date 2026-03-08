@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      user-select: none;
+      /* Ignore mouse events for click-through */
+      pointer-events: none; 
+      /* Make sure the entire body is transparent */
+      background: transparent;
+    }
+    
+    .overlay-container {
+      width: 100%;
+      height: 100vh;
+      box-sizing: border-box;
+      background: rgba(15, 15, 18, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .game-name { 
+      font-size: 1.15rem; 
+      font-weight: 700; 
+      color: #4fc3f7; 
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
+    }
+    
+    .session-time { 
+      font-size: 0.95rem; 
+      color: #e0e0e0; 
+    }
+    
+    .sys-info { 
+      font-size: 0.8rem; 
+      color: #aaa; 
+      margin-top: 6px; 
+      border-top: 1px solid rgba(255,255,255,0.1); 
+      padding-top: 8px; 
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-container" id="widget" style="display:none;">
+    <div class="game-name" id="game-name">No Game Detected</div>
+    <div class="session-time" id="session-time">Monitoring...</div>
+    <div class="sys-info">
+      <span id="clock">00:00</span>
+      <span id="ram">RAM: --</span>
+    </div>
+  </div>
+
+  <script>
+    let startTime = null;
+    let timerInterval = null;
+
+    // Update Clock
+    setInterval(() => {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }, 1000);
+
+    // Update RAM
+    const updateRam = async () => {
+      try {
+        const r = await window.electronAPI.getRamUsage();
+        document.getElementById('ram').textContent = `RAM: ${r.usedGB}/${r.totalGB} GB`;
+      } catch {}
+    };
+    updateRam();
+    setInterval(updateRam, 5000);
+
+    // Sync Session
+    window.electronAPI.onSyncOverlaySession((data) => {
+      const widget = document.getElementById('widget');
+      if (!data) {
+        // Game Ended
+        widget.style.display = 'none';
+        startTime = null;
+        clearInterval(timerInterval);
+      } else {
+        // Game Started
+        widget.style.display = 'flex';
+        document.getElementById('game-name').textContent = data.gameName;
+        startTime = data.startTime;
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          if (!startTime) return;
+          const mins = Math.floor((Date.now() - startTime) / 60000);
+          const h = Math.floor(mins / 60);
+          const m = mins % 60;
+          document.getElementById('session-time').textContent = h > 0 ? `Session Elapsed: ${h}h ${m}m` : `Session Elapsed: ${m}m`;
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>
