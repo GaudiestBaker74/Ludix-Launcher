@@ -143,13 +143,15 @@ Once installed, Ludix Launcher will automatically scan for your Steam games. To 
 
 ## Roadmap
 
-- [ ] More Commands
-- [ ] Auto-Detect Epic Games
-- [ ] Better Performance
-- [ ] Auto Launch when the computer starts up
-- [ ] Create an option that shows you at the end of the week how many hours you played and what games you played.
-- [ ] Multi-language Support
-  - [ ] Spanish
+- [x] More Commands
+- [x] Auto-Detect Epic Games
+- [x] Better Performance
+- [x] Discord RPC
+- [x] Auto Launch when the computer starts up
+- [x] Create an option that shows you at the end of the week how many hours you played and what games you played.
+- [x] Multi-language Support
+  - [x] Spanish (Currently 80%)
+- [] Auto Update
 
 See the [open issues](https://github.com/GaudiestBaker74/Ludix-Launcher/issues) for a full list of proposed features (and known issues).
 
