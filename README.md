@@ -151,7 +151,7 @@ Once installed, Ludix Launcher will automatically scan for your Steam games. To 
 - [x] Create an option that shows you at the end of the week how many hours you played and what games you played.
 - [x] Multi-language Support
   - [x] Spanish (Currently 80%)
-- [] Auto Update
+- [ ] Auto Update
 
 See the [open issues](https://github.com/GaudiestBaker74/Ludix-Launcher/issues) for a full list of proposed features (and known issues).
 
